@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LvD | Personal Portfolio - AI and Data Science</title>
+  <meta name="description"
+    content="Personal AI and Data Science portfolio by LvD, featuring interactive machine learning demos, reinforcement learning experiments, and research projects.">
+  <meta name="author" content="LvD">
+  <meta name="theme-color" content="#0f7f8f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="LvD | Personal Portfolio - AI and Data Science">
+  <meta property="og:description"
+    content="Interactive personal portfolio with ML diagnostics, RL simulation dashboards, and applied data science project demos.">
+  <meta property="og:url" content="https://l4vd.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LvD | Personal Portfolio - AI and Data Science">
+  <meta name="twitter:description"
+    content="Interactive personal portfolio with ML diagnostics, RL simulation dashboards, and applied data science project demos.">
+  <link rel="canonical" href="https://l4vd.github.io/">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@500;600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.css"
+    integrity="sha384-UA8juhPf75SzzAMA/4fo3yOU7sBJ0om7SCD2GHq0fZqZco6tr1UCV7nUbk9J90JM" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.45/dist/katex.min.js"
+    integrity="sha384-Tt7wBxLKwSzFVRET4O4U9H6v8MNaQ/CjN2FMP4xFm0ErrFu6aNqoonRVW5W40iGI"
+    crossorigin="anonymous"></script>
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem("lvd-theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = savedTheme || (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+
+        var savedLanguage = localStorage.getItem("lvd-language") || "en";
+        document.documentElement.setAttribute("lang", savedLanguage);
+      } catch (error) {
+        document.documentElement.setAttribute("data-theme", "light");
+        document.documentElement.setAttribute("lang", "en");
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="bg-wash" aria-hidden="true"></div>
+
+  <div id="formulaLayer" aria-hidden="true">
+    <span class="formula f1">Q(s,a) <- Q(s,a) + alpha[r + gamma max_a'Q(s',a') - Q(s,a)]</span>
+        <span class="formula f2">ELBO = E_q(z|x)[log p(x|z)] - beta D_KL(q(z|x)||p(z))</span>
+        <span class="formula f3">Attn(Q,K,V) = softmax(QK^T / sqrt(d_k))V</span>
+        <span class="formula f4">A^pi(s,a) = Q^pi(s,a) - V^pi(s)</span>
+        <span class="formula f5">L = BCE(y, y_hat) + lambda ||theta||^2_2</span>
+        <span class="formula f6">delta_t = r_t + gamma V(s_t+1) - V(s_t)</span>
+        <span class="formula f7">I(X;Z) = E[log p(z|x) / p(z)]</span>
+        <span class="formula f8">pi(a|s) = exp(Q(s,a)/tau) / sum_b exp(Q(s,b)/tau)</span>
+        <span class="formula f9">theta_k+1 = theta_k - eta m_hat / (sqrt(v_hat) + eps)</span>
+        <span class="formula f10">CKA(K,L) = ||K_cL_c||^2_F / (||K_c||_F||L_c||_F)</span>
+        <span class="formula f11">p(theta|D) propto p(D|theta)p(theta)</span>
+        <span class="formula f12">KL(p||q) = sum_i p_i log(p_i / q_i)</span>
+        <span class="formula f13">R(theta) = E_tau~pi_theta [sum_t gamma^t r_t]</span>
+        <span class="formula f14">nabla_theta J(theta) = E[nabla_theta log pi_theta(a|s) A_t]</span>
+        <span class="formula f15">z = mu + sigma odot epsilon, epsilon~N(0, I)</span>
+        <span class="formula f16">cos(a,b) = (a dot b) / (||a|| ||b||)</span>
+  </div>
+
+  <header class="section topbar">
+    <div class="brand"><span class="brand-main">LvD</span> <span class="brand-sub">v10 Portfolio Lab</span></div>
+    <div class="topbar-actions">
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#experience">Experience</a>
+        <a href="#interactive-lab">ML Lab</a>
+        <a href="#rl-lab">RL Lab</a>
+        <a href="#projects">Projects</a>
+      </nav>
+      <div class="topbar-controls">
+        <button id="themeToggle" class="chip-control" type="button" aria-label="Switch theme"></button>
+        <label class="chip-control lang-control" for="languageSelect">
+          <span id="languageLabel">Language</span>
+          <select id="languageSelect" aria-label="Language">
+            <option value="en">EN</option>
+            <option value="de">DE</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <section id="overview" class="section hero">
+    <p class="eyebrow">AI + Data Science Personal Portfolio / v10</p>
+    <h1>One Interface for Representation Learning and Decision Intelligence</h1>
+    <p class="hero-copy">
+      This version merges the ML diagnostics from v4 with the reinforcement-learning command center from v5.
+      You can optimize a neural net, inspect latent manifolds, train a Q-learning agent, and then play with a
+      mini-interaction for each flagship project.
+    </p>
+    <div class="hero-pills">
+      <span>Neural Training</span>
+      <span>Latent Geometry</span>
+      <span>GridWorld RL</span>
+      <span>Project Widgets</span>
+    </div>
+  </section>
+
+  <main>
+    <section class="section panel">
+      <p class="panel-label">Skills</p>
+      <h2>Technical Competence Matrix</h2>
+      <div class="skill-grid">
+        <article class="skill-card">
+          <h3>Machine Learning and AI</h3>
+          <ul>
+            <li>Deep learning, sequence models, and policy optimization</li>
+            <li>Representation diagnostics, latent probing, and ablations</li>
+            <li>Interpretability in high-stakes scientific settings</li>
+          </ul>
+          <div class="skill-bar"><span style="width: 95%"></span></div>
+        </article>
+        <article class="skill-card">
+          <h3>Programming and Systems</h3>
+          <ul>
+            <li>Python research pipelines and production-ready code</li>
+            <li>Java/full-stack architecture and systems thinking</li>
+            <li>Reproducible experiment design and clean tooling</li>
+          </ul>
+          <div class="skill-bar"><span style="width: 90%"></span></div>
+        </article>
+        <article class="skill-card">
+          <h3>Scientific Workflow</h3>
+          <ul>
+            <li>Hypothesis-first model iteration with diagnostics</li>
+            <li>Domain transfer from proteins to language systems</li>
+            <li>Reliable reporting from metric to narrative</li>
+          </ul>
+          <div class="skill-bar"><span style="width: 92%"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience" class="section panel">
+      <p class="panel-label">Experience</p>
+      <h2>Research and Applied Work</h2>
+      <div class="timeline">
+        <article class="timeline-item">
+          <div class="time-pill">2026</div>
+          <div>
+            <h3>Research Practicum: LLM Misalignment</h3>
+            <p class="meta">Prof. Dr. Milica Gasic | Heinrich-Heine-University</p>
+            <p>
+              Investigated mismatch between intended behavior and model responses, with emphasis on measurable
+              evaluation criteria and framework-level diagnostics.
+            </p>
+          </div>
+        </article>
+        <article class="timeline-item">
+          <div class="time-pill">2025</div>
+          <div>
+            <h3>Research Practicum: Protein Engineering</h3>
+            <p class="meta">Prof. Dr. Birgit Strodel | Forschungszentrum Julich</p>
+            <p>
+              Built model-centric workflows for protein binding analysis, focusing on interpretable deep-learning
+              behavior in biologically meaningful feature spaces.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="interactive-lab" class="section split-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <p class="panel-label">Interactive Neural Network</p>
+          <h2>MLP Training Console</h2>
+        </div>
+
+        <div class="canvas-box">
+          <svg id="nnNetworkSvg" viewBox="0 0 700 340" role="img"
+            aria-label="Neural network forward and backprop visualization"></svg>
+        </div>
+
+        <div class="controls-grid">
+          <label>Input x1
+            <input id="nnX1" type="range" min="-2" max="2" step="0.01" value="0.9">
+            <output id="nnX1Value">0.90</output>
+          </label>
+          <label>Input x2
+            <input id="nnX2" type="range" min="-2" max="2" step="0.01" value="-0.3">
+            <output id="nnX2Value">-0.30</output>
+          </label>
+          <label>Target y
+            <input id="nnTarget" type="range" min="0.01" max="0.99" step="0.01" value="0.82">
+            <output id="nnTargetValue">0.82</output>
+          </label>
+          <label>Learning rate
+            <input id="nnLr" type="range" min="0.003" max="0.2" step="0.001" value="0.04">
+            <output id="nnLrValue">0.040</output>
+          </label>
+          <label>Weight decay lambda
+            <input id="nnWd" type="range" min="0" max="0.08" step="0.001" value="0.01">
+            <output id="nnWdValue">0.010</output>
+          </label>
+          <label>Hidden activation
+            <select id="nnHiddenActivation">
+              <option value="tanh">tanh</option>
+              <option value="relu">relu</option>
+              <option value="sigmoid">sigmoid</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="nnStepTrain" type="button">Run 1 Optimizer Step</button>
+          <button id="nnRun50" type="button">Run 50 Steps</button>
+          <button id="nnRandomize" type="button">Reset Parameters</button>
+        </div>
+
+        <div class="metrics-grid metrics-4">
+          <div>
+            <p class="metric-label">Prediction y_hat</p>
+            <p id="nnPredValue" class="metric-value">0.000</p>
+          </div>
+          <div>
+            <p class="metric-label">Loss (BCE + L2)</p>
+            <p id="nnLossValue" class="metric-value">0.0000</p>
+          </div>
+          <div>
+            <p class="metric-label">Gradient Norm</p>
+            <p id="nnGradNormValue" class="metric-value">0.000</p>
+          </div>
+          <div>
+            <p class="metric-label">Epoch</p>
+            <p id="nnEpochValue" class="metric-value">0</p>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <p class="metric-label">Loss History</p>
+          <canvas id="nnLossChart" width="660" height="180" aria-label="Loss over optimization steps"></canvas>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <p class="panel-label">Latent Space Explorer</p>
+          <h2>Embedding Manifold Inspector</h2>
+        </div>
+
+        <div class="canvas-box latent-wrap">
+          <canvas id="latentCanvas" width="640" height="400" aria-label="Latent embedding projection canvas"></canvas>
+          <div id="latentTooltip" class="latent-tooltip" hidden role="status" aria-live="polite" aria-atomic="true">
+          </div>
+        </div>
+
+        <div class="controls-grid">
+          <label>Rotation alpha
+            <input id="latentAlpha" type="range" min="-180" max="180" step="1" value="22">
+            <output id="latentAlphaValue">22 deg</output>
+          </label>
+          <label>Rotation beta
+            <input id="latentBeta" type="range" min="-180" max="180" step="1" value="-30">
+            <output id="latentBetaValue">-30 deg</output>
+          </label>
+          <label>Temperature
+            <input id="latentTemp" type="range" min="0.25" max="1.8" step="0.01" value="0.92">
+            <output id="latentTempValue">0.92</output>
+          </label>
+          <label>Projection mode
+            <select id="latentProjectionMode">
+              <option value="pca">PCA-like linear map</option>
+              <option value="umap">UMAP-like nonlinear</option>
+              <option value="tsne">t-SNE-like heavy-tail</option>
+            </select>
+          </label>
+          <label>Decode mode
+            <select id="latentDecodeMode">
+              <option value="protein">Protein motifs</option>
+              <option value="language">Token semantics</option>
+              <option value="policy">Policy states</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="metrics-grid metrics-2">
+          <div>
+            <p class="metric-label">Cluster Separation</p>
+            <p id="latentSeparationValue" class="metric-value">0.00</p>
+          </div>
+          <div>
+            <p class="metric-label">Visible Points</p>
+            <p id="latentPointCountValue" class="metric-value">0</p>
+          </div>
+        </div>
+
+        <div class="readout-box">
+          <p class="metric-label">Decoded Readout</p>
+          <p id="latentReadout" class="readout-text">Hover over a point to inspect its local manifold meaning.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="rl-lab" class="section rl-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <p class="panel-label">Environment</p>
+          <h2>GridWorld Editor and Policy Overlay</h2>
+        </div>
+
+        <div class="canvas-box">
+          <canvas id="rlGridCanvas" width="700" height="700" aria-label="Reinforcement learning grid world"></canvas>
+        </div>
+
+        <div class="world-controls">
+          <label>Interaction mode
+            <select id="rlBrushSelect">
+              <option value="inspect">Inspect state</option>
+              <option value="wall">Paint wall</option>
+              <option value="trap">Paint trap</option>
+              <option value="goal">Set goal</option>
+              <option value="start">Set start</option>
+              <option value="empty">Erase to empty</option>
+            </select>
+          </label>
+
+          <div class="button-row">
+            <button id="rlDefaultMapBtn" type="button">Default Map</button>
+            <button id="rlMazeMapBtn" type="button">Generate New Maze</button>
+            <button id="rlResetQBtn" type="button">Reset Q-table</button>
+            <button id="rlStopAnimBtn" type="button">Stop Animation</button>
+          </div>
+        </div>
+
+        <p class="hint">Tip: set mode to Inspect state and click any cell to view action-values and preferred action.
+        </p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <p class="panel-label">Training Dashboard</p>
+          <h2>Online Control and Diagnostics</h2>
+        </div>
+
+        <div class="controls-grid">
+          <label>Learning rate alpha
+            <input id="rlAlpha" type="range" min="0.01" max="0.5" step="0.01" value="0.18">
+            <output id="rlAlphaValue">0.18</output>
+          </label>
+          <label>Discount gamma
+            <input id="rlGamma" type="range" min="0.4" max="0.99" step="0.01" value="0.93">
+            <output id="rlGammaValue">0.93</output>
+          </label>
+          <label>Exploration epsilon
+            <input id="rlEpsilon" type="range" min="0.01" max="0.6" step="0.01" value="0.16">
+            <output id="rlEpsilonValue">0.16</output>
+          </label>
+          <label>Step penalty
+            <input id="rlStepCost" type="range" min="-0.2" max="-0.005" step="0.005" value="-0.03">
+            <output id="rlStepCostValue">-0.03</output>
+          </label>
+          <label>Max steps per episode
+            <input id="rlMaxSteps" type="range" min="20" max="350" step="5" value="120">
+            <output id="rlMaxStepsValue">120</output>
+          </label>
+          <label>Batch size
+            <input id="rlBatchEpisodes" type="range" min="10" max="600" step="10" value="120">
+            <output id="rlBatchEpisodesValue">120</output>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="rlTrainOneBtn" type="button">Train 1 Episode</button>
+          <button id="rlTrainBatchBtn" type="button">Train Batch</button>
+          <button id="rlPlayPolicyBtn" type="button">Run Greedy Policy</button>
+        </div>
+
+        <div class="metrics-grid metrics-3">
+          <div>
+            <p class="metric-label">Episodes</p>
+            <p class="metric-value" id="rlEpisodesValue">0</p>
+          </div>
+          <div>
+            <p class="metric-label">Average Return</p>
+            <p class="metric-value" id="rlAvgReturnValue">0.000</p>
+          </div>
+          <div>
+            <p class="metric-label">Best Return</p>
+            <p class="metric-value" id="rlBestReturnValue">0.000</p>
+          </div>
+          <div>
+            <p class="metric-label">Success Rate</p>
+            <p class="metric-value" id="rlSuccessRateValue">0%</p>
+          </div>
+          <div>
+            <p class="metric-label">Average Steps</p>
+            <p class="metric-value" id="rlAvgStepsValue">0</p>
+          </div>
+          <div>
+            <p class="metric-label">Policy Entropy</p>
+            <p class="metric-value" id="rlEntropyValue">0.000</p>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <p class="metric-label">Episode Return History</p>
+          <canvas id="rlReturnsChart" width="620" height="180" aria-label="Returns chart"></canvas>
+        </div>
+
+        <div class="chart-box">
+          <p class="metric-label">Success Moving Average (Window 20)</p>
+          <canvas id="rlSuccessChart" width="620" height="140" aria-label="Success chart"></canvas>
+        </div>
+
+        <div class="inspector-grid">
+          <article class="inspector-card">
+            <p class="metric-label">State-Action Inspector</p>
+            <p id="rlSelectedStateText" class="inspector-title">State: (0, 9)</p>
+            <div class="q-bars">
+              <div class="q-row"><span>Up</span>
+                <div class="bar"><i id="rlQBarUp"></i></div><strong id="rlQValUp">0.000</strong>
+              </div>
+              <div class="q-row"><span>Right</span>
+                <div class="bar"><i id="rlQBarRight"></i></div><strong id="rlQValRight">0.000</strong>
+              </div>
+              <div class="q-row"><span>Down</span>
+                <div class="bar"><i id="rlQBarDown"></i></div><strong id="rlQValDown">0.000</strong>
+              </div>
+              <div class="q-row"><span>Left</span>
+                <div class="bar"><i id="rlQBarLeft"></i></div><strong id="rlQValLeft">0.000</strong>
+              </div>
+            </div>
+          </article>
+
+          <article class="inspector-card">
+            <p class="metric-label">Bellman Update Inspector</p>
+            <pre id="rlBellmanText"
+              class="bellman-text">No update yet. Train one episode to inspect the temporal-difference update.</pre>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <section id="projects" class="section panel">
+      <p class="panel-label">Selected Projects</p>
+      <h2>Current Directions + Mini Interactions</h2>
+      <div class="project-grid">
+        <article class="project-card">
+          <h3>RoPE in Decision Transformers</h3>
+          <p>Studying long-context policy behavior and representation drift under rotational positional encodings.</p>
+          <a id="projectLinkRope" class="project-link" href="#" target="_blank" rel="noopener noreferrer">Add project
+            link</a>
+          <div class="mini-widget">
+            <label>RoPE angle theta
+              <input id="ropeTheta" type="range" min="0" max="360" step="1" value="45">
+              <output id="ropeThetaValue">45 deg</output>
+            </label>
+            <canvas id="ropeCanvas" width="280" height="120" aria-label="RoPE phase widget"></canvas>
+            <p id="ropeReadout" class="mini-readout">Phase shift score: 0.00</p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Grad-CAM for Protein Binding Localization</h3>
+          <p>Interpreting 3D model saliency for ligand-relevant structural regions and uncertainty-aware analysis.</p>
+          <a id="projectLinkGradCam" class="project-link" href="#" target="_blank" rel="noopener noreferrer">Add project
+            link</a>
+          <div class="mini-widget">
+            <div class="button-row">
+              <button id="camRegenerate" type="button">Regenerate Heatmap</button>
+            </div>
+            <label>Activation threshold
+              <input id="camThreshold" type="range" min="0.1" max="0.95" step="0.01" value="0.58">
+              <output id="camThresholdValue">0.58</output>
+            </label>
+            <canvas id="camCanvas" width="280" height="140" aria-label="Grad-CAM heatmap widget"></canvas>
+            <p id="camCoverage" class="mini-readout">High-saliency coverage: 0%</p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>LLM Misalignment Framework Design</h3>
+          <p>Designing evaluators that separate benchmark fluency from objective-level behavioral alignment.</p>
+          <a id="projectLinkMisalignment" class="project-link" href="#" target="_blank" rel="noopener noreferrer">Add
+            project link</a>
+          <div class="mini-widget">
+            <label>Sample response snippet
+              <textarea id="alignInput"
+                rows="3">I can help with safe alternatives and explain my reasoning clearly.</textarea>
+            </label>
+            <label>Risk profile
+              <select id="alignRisk">
+                <option value="low">Low-risk request</option>
+                <option value="medium">Ambiguous request</option>
+                <option value="high">High-risk request</option>
+              </select>
+            </label>
+            <label>Truthfulness confidence
+              <input id="alignTruth" type="range" min="0" max="1" step="0.01" value="0.82">
+              <output id="alignTruthValue">0.82</output>
+            </label>
+            <div class="button-row">
+              <button id="alignScoreBtn" type="button">Score Alignment</button>
+            </div>
+            <div class="meter"><i id="alignMeter"></i></div>
+            <p id="alignResult" class="mini-readout">Alignment score: 0.00 (pending)</p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Generative Models Research</h3>
+          <p>Exploring controllable generation quality across diffusion and autoregressive regimes with diagnostic
+            proxies.</p>
+          <a id="projectLinkGenerative" class="project-link" href="#" target="_blank" rel="noopener noreferrer">Add
+            project link</a>
+          <div class="mini-widget">
+            <label>Sampling temperature
+              <input id="genTemp" type="range" min="0.2" max="1.8" step="0.01" value="0.9">
+              <output id="genTempValue">0.90</output>
+            </label>
+            <div class="button-row">
+              <button id="genSampleBtn" type="button">Generate Batch</button>
+            </div>
+            <canvas id="genCanvas" width="280" height="140" aria-label="Generative model batch quality widget"></canvas>
+            <p id="genReadout" class="mini-readout">Batch coherence: 0.00 | FID proxy: 0.00</p>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Bachelor Thesis: Hit Song Science</h3>
+          <p>Song success prediction from audio-profile signals with interpretable scoring and feature-level
+            diagnostics.</p>
+          <a id="projectLinkHitSong" class="project-link" href="#" target="_blank" rel="noopener noreferrer">Add project
+            link</a>
+          <div class="mini-widget">
+            <label>Acousticness
+              <input id="hitAcoustic" type="range" min="0" max="1" step="0.01" value="0.34">
+              <output id="hitAcousticValue">0.34</output>
+            </label>
+            <label>Energy
+              <input id="hitEnergy" type="range" min="0" max="1" step="0.01" value="0.78">
+              <output id="hitEnergyValue">0.78</output>
+            </label>
+            <label>Danceability
+              <input id="hitDance" type="range" min="0" max="1" step="0.01" value="0.82">
+              <output id="hitDanceValue">0.82</output>
+            </label>
+            <div class="button-row">
+              <button id="hitPredictBtn" type="button">Predict Song Success</button>
+            </div>
+            <div class="meter"><i id="hitMeter"></i></div>
+            <p id="hitReadout" class="mini-readout">Predicted hit probability: 0%</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="section footer">
+    <p>LvD / v10 / Unified ML + RL Interactive Portfolio</p>
+    <p id="llmNotice" class="footer-note">Created with assistance from LLM tools.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
